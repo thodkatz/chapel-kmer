@@ -18,7 +18,18 @@ module WordSerial {
             if(m.contains(parsedWord)) then m.set(parsedWord, m[parsedWord] + 1);
             else m.add(parsedWord, 1);
         }
-        
         return m;
+    }
+
+    proc counting_v1(text : string) : map {
+        var kmerHash : map(string, int, true);
+        for word in text.split(' ') {
+            var stripedWord = word.strip().strip(",.");
+            if(kmerHash.contains(stripedWord)) then
+                kmerHash.set(stripedWord, kmerHash.getValue(stripedWord) + 1);
+            else 
+                kmerHash.add(stripedWord, 1);
+        }
+        return kmerHash;
     }
 }
