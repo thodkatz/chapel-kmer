@@ -18,28 +18,29 @@ module Benchmarking {
     var timer : Timer;
 
     timer.start();
-    var mapSerial : map = WordSerial.counting(text);
+    var mapSerial : map = WordSerial.counting_v0(text);
     timer.stop();
     if (benchmark) then writeln("Time: ", timer.elapsed());
-    try! writeMap(mapSerial, "output_serial.txt");
+    try! writeMap(mapSerial, "word_count_serial.txt");
 
     timer.clear();
 
     timer.start();
-    var mapParallel : map = try! WordParallel.counting_v1(text);
+    var mapParallel : map = try! WordParallel.counting_v0(text);
     timer.stop();
     if (benchmark) then writeln("Time: ", timer.elapsed());
-    try! writeMap(mapParallel, "output_parallel.txt");
+    try! writeMap(mapParallel, "word_count_parallel.txt");
   }
 
   // read "file.txt" (lorem) and convert it to unified string
   proc readString(path : string) : string throws {
     var file = open(path, iomode.r);
-
     var text : string;
-    
+
     for line in file.lines() { 
-        text += line.strip().strip("."); 
+      // text += line.strip().strip("."); 
+      text += line.strip("\n"); 
+      text += " ";
     }
 
     file.close();
@@ -51,10 +52,10 @@ module Benchmarking {
     var writer = outputFile.writer();
 
     writer.writeln("word:count");
-      for pair in m.items() {
-        var(key, value) = pair;
-        writer.writeln(key, ":", value);
-      }
+    for pair in m.items() {
+      var(key, value) = pair;
+      writer.writeln(key, ":", value);
+    }
 
     writer.close();
     outputFile.close();
