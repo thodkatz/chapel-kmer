@@ -9,7 +9,7 @@ SRC_KMER = src/kmer/*.chpl
 $(shell mkdir -p bin)
 
 word: $(SRC_WORD)
-	$(CC) $(CFLAGS) $^ -o $(BIN)/word.good
+	$(CC) $(CFLAGS) $^ -o $(BIN)/word
 
 fasta:
 	@echo "USAGE: make fasta <name of fasta file>"
@@ -17,7 +17,7 @@ fasta:
 	$(shell awk '!/^>/ { printf "%s", $$0; n = "\n" } /^>/ { print n $$0; n = "" } END { printf "%s", n }' $(FASTA) > linear.fasta)
 
 kmer: $(SRC_KMER)
-	$(CC) $(CFLAGS) $^ -o $(BIN)/kmer.good
+	$(CC) $(CFLAGS) $^ -o $(BIN)/kmer
 
 .PHONY: clean
 

@@ -23,6 +23,7 @@ module KMER {
   }
 
   // get a file and create a kmer iterator
+  // intended to be used for multiline fasta files
   // archived because it is missing the kmer between 
   // the lines
   iter sequenceSerialArchived(file, k : int) throws {
