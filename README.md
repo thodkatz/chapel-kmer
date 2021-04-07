@@ -92,11 +92,6 @@ GGG:1
 TCG:1
 GGC:1
 ```
-# Benchmarks
-
-WIP!
-
-For proof of concept to ensure that we have acceleration in the parallel version, we will compare the serial and the parallel Chapel versions. We control the random generated DNA sequence with the number of lines. We assume a fixed size of length for each line.
 
 # Related kmer-projects
 - [Jellyfish](https://github.com/gmarcais/Jellyfish)

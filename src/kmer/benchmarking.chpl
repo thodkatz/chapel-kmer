@@ -14,27 +14,11 @@ module Benchmarking {
     var file = try! open(pathFasta, iomode.r);
 
     timer.start();
-    var countTableSerial = try! KMER.countingSerial(bioSequence, k);
+    var countTableSerial = try! KMER.countingSerial(file, k);
     timer.stop();
     writeln("Time elasped: ", timer.elapsed());
 
     try! writeMap(countTableSerial, "kmer_serial.txt");
-
-    timer.clear();
-    timer.start();
-    var countTableSerial2 = try! KMER.countingSerial2(file, k);
-    timer.stop();
-    writeln("Time elasped: ", timer.elapsed());
-
-    try! writeMap(countTableSerial2, "kmer_serial2.txt");
-
-    timer.clear();
-    timer.start();
-    var countTableSerial3 = try! KMER.countingSerial3(file, k);
-    timer.stop();
-    writeln("Time elasped: ", timer.elapsed());
-
-    try! writeMap(countTableSerial2, "kmer_serial3.txt");
 
     timer.clear();
     timer.start();

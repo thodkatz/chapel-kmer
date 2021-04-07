@@ -22,57 +22,8 @@ module KMER {
     }
   }
 
-  // get a file and create a kmer iterator
-  // intended to be used for multiline fasta files
-  // archived because it is missing the kmer between 
-  // the lines
-  iter sequenceSerialArchived(file, k : int) throws {
-    // skip first line
-    var firstLine : string;
-    (file.reader()).readline(firstLine);
-
-    for i in file.lines(true,firstLine.size) {
-      var line = i.strip("\n");
-      var size = line.size - k + 1;
-      for j in 0..#size {
-        yield line[j..j+k-1];
-      }
-    }
-  }
-
-  proc countingSerial(bioSequence : string, k : int) : map {
+  proc countingSerial(file, k : int) : map throws {
     writeln("Serial version");
-    assert(k < bioSequence.size);
-    var size : int = bioSequence.size - k + 1;
-    var countTable = new map(string, int, parSafe = false);
-
-    for i in 0..#size {
-      var kmer : string = bioSequence[i..i+k-1];
-      if(countTable.contains(kmer)) then 
-        countTable.set(kmer, countTable[kmer] + 1);
-      else 
-        countTable.add(kmer, 1);
-    }
-
-    return countTable;
-  }
-
-  proc countingSerial2(file, k : int) : map throws {
-    writeln("Serial version 2");
-    var countTable = new map(string, int, parSafe = false);
-
-    for kmer in sequenceSerialArchived(file, k) {
-      if(countTable.contains(kmer)) then 
-        countTable.set(kmer, countTable[kmer] + 1);
-      else 
-        countTable.add(kmer, 1);
-    }
-
-    return countTable;
-  }
-
-  proc countingSerial3(file, k : int) : map throws {
-    writeln("Serial version 3");
     var countTable = new map(string, int, parSafe = false);
 
     for kmer in sequenceSerial(file, k) {
