@@ -6,7 +6,6 @@ module Benchmarking {
 
   config const k : int = 3;
   config const pathFasta = "linear.fasta";
-  config const probSize = 15;
 
   proc main() {
     var timer : Timer;
